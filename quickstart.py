@@ -24,7 +24,7 @@ asset = os.getenv("ASSET_TO_DOWNLOAD")
 
 # global variables
 file_types = ("*.jpg", "*.jpeg", "*.JPG", "*.JPEG")
-min_number_of_images = 2
+min_number_of_images = 5
 
 # functions
 
@@ -147,11 +147,21 @@ def get_images(image_paths):
 
     # create empty list of images    
     images = list()
+    gcp_paths = list()
+    text_file_types = ["*.txt", "*.TXT"]
     
     # iterate through each path
     for image_path in image_paths:
         # append tuple to images
         images.append(('images', (os.path.basename(image_path), open(image_path, 'rb'), 'image/jpg')))
+    
+    # append gcp data
+    for type in text_file_types: # check for gcp files
+        gcp_paths.extend(glob.glob(os.path.join(image_path, type))) # add file paths of given type to image paths
+
+    if gcp_paths != []: # check if gcp file give
+        for gcp_path in gcp_paths: # append all gcp files to end of images
+            images.append(('gcp', (os.path.basename(gcp_path), open(gcp_path, 'rb'), 'gcp')))
 
     # return images
     return images
@@ -241,7 +251,6 @@ def get_processing_time(token, project_id, task_id):
                         headers = {'Authorization': 'JWT {}'.format(token)}).json()
     # return status
     return res['processing_time']
-    
 
 
 if __name__ == "__main__":
@@ -269,39 +278,46 @@ if __name__ == "__main__":
 
     # send images with the given options to server
     task_id = post_task(token, project_id, images, options)
-
-    # get time
-    init_time = time.time()
     
     # monitor task until completion or failure
-    while True:
-        # get status 
-        status = get_status(token, project_id, task_id)
-        
-        # check status
-        if status == status_codes.COMPLETED:
-            print("Task completed")
-            break
-        elif status == status_codes.FAILED:
-            print("Task failed")
-        else:
-            processing_time = get_processing_time(token, project_id, task_id)
-            # format time
-            s = processing_time / 1000 # convert from milliseconds to seconds
-            s = 0 if processing_time < 0 else s # set to zero if less than zero
-            m, s = divmod(s, 60) # get minutes
-            h, m = divmod(m, 60) # get hours
+    try:
+        while True:
+            # get status 
+            status = get_status(token, project_id, task_id)
             
+            # check status
+            if status == status_codes.COMPLETED:
+                print("Task completed")
+                break
+            elif status == status_codes.FAILED:
+                print("Task failed")
+            else:
+                # processing_time = get_processing_time(token, project_id, task_id)
+                res = get_task(token, project_id, task_id)
+                processing_time = res['processing_time']
+                progress = res['running_progress']
+                # print(res.keys())
+                
+                # format time
+                s = processing_time / 1000 # convert from milliseconds to seconds
+                s = 0 if processing_time < 0 else s # set to zero if less than zero
+                m, s = divmod(s, 60) # get minutes
+                h, m = divmod(m, 60) # get hours
 
-            # get time 
-            elapsed_time = f'{round(h):02}:{round(m):02}:{round(s):02}'
-            
-            # print time
-            print(f"Processing . . . ({elapsed_time})")
-            
-            
-            # sleep
-            time.sleep(3)
+                # get time 
+                elapsed_time = f'{round(h):02}:{round(m):02}:{round(s):02}'
+                
+                # print time
+                print(f"Processing . . . ({elapsed_time}) ({progress*100:2.2f}%)")
+                
+                # sleep
+                time.sleep(3)
+    except KeyboardInterrupt:
+        # delete project
+        delete_project(token, project_id)
+        
+        # stop program 
+        print_error("KeyboardInterrupt")
     
     # print total time
     print(f'Total Time: {elapsed_time}')
@@ -316,7 +332,4 @@ if __name__ == "__main__":
     
     # download item
     get_download(token, project_id, task_id, asset)
-
-    # requests.delete("http://localhost:8000/api/projects/{}/".format(project_id), 
-    #                     headers={'Authorization': 'JWT {}'.format(token)})
 

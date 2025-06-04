@@ -22,5 +22,9 @@
     {
         "name": "dsm",
         "value": "true"
+    },
+    {
+        "name": "feature-quality",
+        "value": "low"
     }
 ]
