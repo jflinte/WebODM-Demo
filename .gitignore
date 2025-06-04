@@ -1,0 +1,7 @@
+# Ignore environment variables
+.env
+
+# Ignore downloadables
+*.pdf
+*.tif
+*.zip

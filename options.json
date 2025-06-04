@@ -1,0 +1,26 @@
+[
+    {
+        "name": "orthophoto-resolution",
+        "value": 8
+    },
+    {
+        "name": "fast-orthophoto",
+        "value": "true"
+    },
+    {
+        "name": "auto-boundary",
+        "value": "true"
+    },
+    {
+        "name": "orthophoto-png",
+        "value": "true"
+    },
+    {
+        "name": "dtm",
+        "value": "true"
+    },
+    {
+        "name": "dsm",
+        "value": "true"
+    }
+]

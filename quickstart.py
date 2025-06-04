@@ -1,3 +1,10 @@
+"""
+quickstart.py: Demo
+
+Author: Jonas 
+Last Updated: 2025-06-03
+"""
+
 # imports
 import requests, glob, sys, os, time, json
 from dotenv import load_dotenv
@@ -5,7 +12,7 @@ import status_codes
 
 
 # environment variables
-load_dotenv()
+load_dotenv() # load environment variables
 
 username = os.getenv("USERNAME")
 password = os.getenv("PASSWORD")
@@ -149,6 +156,22 @@ def get_images(image_paths):
     # return images
     return images
 
+def get_task(token, project_id, task_id):
+    """
+    Gets task
+    
+    :param token: authentication token
+    :param project_id: ID of project
+    :param task_id: ID of task
+    :return: task
+    """
+    
+    # get project and task based on their respective identification
+    res = requests.get('http://localhost:8000/api/projects/{}/tasks/{}/'.format(project_id, task_id),
+                        headers = {'Authorization': 'JWT {}'.format(token)}).json()
+    
+    return res
+
 def get_download(token, project_id, task_id, asset):
     """
     download a given asset
@@ -220,6 +243,7 @@ def get_processing_time(token, project_id, task_id):
     return res['processing_time']
     
 
+
 if __name__ == "__main__":
     
     # get image paths 
@@ -248,7 +272,7 @@ if __name__ == "__main__":
 
     # get time
     init_time = time.time()
-
+    
     # monitor task until completion or failure
     while True:
         # get status 
@@ -275,11 +299,24 @@ if __name__ == "__main__":
             # print time
             print(f"Processing . . . ({elapsed_time})")
             
+            
             # sleep
             time.sleep(3)
-            
+    
+    # print total time
+    print(f'Total Time: {elapsed_time}')
+    
+    # print available assets
+    res = get_task(token, project_id, task_id) # get task
+    
+    available_assets = res['available_assets'] # get all available assets
+    
+    for available_asset in available_assets: # print to console
+        print(available_asset)
+    
     # download item
     get_download(token, project_id, task_id, asset)
 
-    print(f'Total Time: {elapsed_time}')
-    
+    # requests.delete("http://localhost:8000/api/projects/{}/".format(project_id), 
+    #                     headers={'Authorization': 'JWT {}'.format(token)})
+
