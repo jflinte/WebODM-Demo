@@ -37,7 +37,7 @@ def create_parser():
     parser.add_argument("-od", "--output_dir", help="Directory path to folder where output files will be placed", type=str)
 
     # Asset to Download (default is all.zip)
-    parser.add_argument("-a", "--asset", help="Download files as all.zip", type=str, default="all.zip")
+    parser.add_argument("-a", "--asset", help="What asset should be downloaded", type=str, default="all.zip")
     
     return parser
 
