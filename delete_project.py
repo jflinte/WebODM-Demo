@@ -6,6 +6,7 @@ Last Updated: 2025-06-04
 """
 
 # imports
+import os, sys
 import quickstart
 import requests
 
@@ -47,17 +48,22 @@ def delete_projects(token, project_id):
                             headers={'Authorization': 'JWT {}'.format(token)})
 
     
-    
 if __name__ == '__main__':
     
+    if len(sys.argv) < 2:
+        quickstart.print_error("Must provide name of project. Usuage ./delete_project.py <name of project>")
+    else:
+        project_name = sys.argv[1]
+        
+    
     # name of project to be deleted
-    name = "quickstart_demo"
+    print(f'Deleting {project_name}')
     
     # get token
     token = quickstart.post_authentication(quickstart.username, quickstart.password)
     
     # get project IDs
-    project_ids = get_project_ids(token, name)
+    project_ids = get_project_ids(token, project_name)
     
     # delete all projects of name
     delete_projects(token, project_ids)
