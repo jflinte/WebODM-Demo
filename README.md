@@ -20,8 +20,8 @@ Additional notes:
 - `username` and `password` should be placed in `.env` file
 - Minimum of 5 images must be provided
 - Images must be of `*.jpg` file type
-- If processing with GCP, the GCP data must be included **IN** same directory as images as a `*.txt` file. 
-- Directory named after the `project_name` will be created either in root directory or in specified output directory, where the output will be stored. 
+- If processing with GCP, the GCP data must be included **IN** the same directory as the images. The data must be stored as a `*.txt` file. 
+- Directory named after the `project_name` will be created either in the root directory or in the specified output directory, where the output will be stored. 
 
 `more pending`
 
