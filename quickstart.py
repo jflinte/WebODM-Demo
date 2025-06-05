@@ -179,11 +179,12 @@ def get_task(token, project_id, task_id):
     
     return res
 
-def get_download(token, project_id, task_id, output_dir, asset):
+def get_download(token, project_name, project_id, task_id, output_dir, asset):
     """
     Downloads a given asset. If output directory not found, defaults to root directory
     
     :param token: authentication token
+    :param project_name: name of project
     :param project_id: ID of project
     :param task_id: ID of task
     :param output_dir: directory of where the file should be downloaded
@@ -196,13 +197,22 @@ def get_download(token, project_id, task_id, output_dir, asset):
                         headers={'Authorization': 'JWT {}'.format(token)},
                         stream=True)
 
-    asset_path = asset
+    asset_path = str()
     
     # check that output directory is valid
     if output_dir == None:
-        pass
+        # make directory 
+        os.makedirs("{}".format(project_name), exist_ok=True) 
+        
+        # get path
+        asset_path = os.path.join(project_name, asset)
     elif os.path.exists(output_dir) and os.path.isdir(output_dir):
-        asset_path = os.path.join(output_dir, asset)
+        # make directory 
+        os.makedirs("{}/{}".format(output_dir, project_name), exist_ok=True)
+        
+        # get path
+        asset_path = os.path.join(output_dir, project_name)
+        asset_path = os.path.join(asset_path, asset)
     else:
         print(f"\nOutput_dir invalid, downloading {asset} to root directory\n")
     
@@ -353,5 +363,5 @@ if __name__ == "__main__":
     asset = parser_module.validate_asset(available_assets, asset)
     
     # download asset
-    get_download(token, project_id, task_id, output_dir, asset)
+    get_download(token, project_name, project_id, task_id, output_dir, asset)
 

@@ -1,0 +1,22 @@
+[
+    {
+        "name": "auto-boundary",
+        "value": true
+    },
+    {
+        "name": "mesh-octree-depth",
+        "value": "12"
+    },
+    {
+        "name": "use-3dmesh",
+        "value": true
+    },
+    {
+        "name": "pc-quality",
+        "value": "high"
+    },
+    {
+        "name": "mesh-size",
+        "value": "300000"
+    }
+]

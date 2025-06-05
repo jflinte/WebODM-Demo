@@ -4,7 +4,6 @@ __pycache__/
 # Ignore IDE related items
 .vscode/
 
-
 # Ignore environment variables
 .env
 
@@ -13,3 +12,6 @@ __pycache__/
 *.tif
 *.zip
 *.png
+
+# Ignore list of predesigned commands
+commands.txt

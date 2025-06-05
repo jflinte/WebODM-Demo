@@ -12,19 +12,11 @@
         "value": "true"
     },
     {
-        "name": "orthophoto-png",
-        "value": "true"
-    },
-    {
         "name": "dtm",
         "value": "true"
     },
     {
         "name": "dsm",
         "value": "true"
-    },
-    {
-        "name": "feature-quality",
-        "value": "low"
     }
 ]

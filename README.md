@@ -18,6 +18,10 @@ Additional arguments:
 
 Additional notes:
 - `username` and `password` should be placed in `.env` file
+- Minimum of 5 images must be provided
+- Images must be of `*.jpg` file type
+- If processing with GCP, the GCP data must be included **IN** same directory as images as a `*.txt` file. 
+- Directory named after the `project_name` will be created either in root directory or in specified output directory, where the output will be stored. 
 
 `more pending`
 
@@ -25,7 +29,7 @@ Additional notes:
 `delete_project.py <name of project>`
 
 Additional Notes:
-- Deletes **all** projects of given name, regardless of different IDs, letting one perform mass deletions.
+- Deletes **all** projects of a given name, regardless of different IDs, letting one perform mass deletions.
 
 `more pending`
 
