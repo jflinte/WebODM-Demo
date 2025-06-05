@@ -2,7 +2,7 @@
 delete_project.py: delete ALL projects of a given name
 
 Author: Jonas 
-Last Updated: 2025-06-03
+Last Updated: 2025-06-04
 """
 
 # imports

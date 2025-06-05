@@ -2,25 +2,22 @@
 quickstart.py: Demo
 
 Author: Jonas 
-Last Updated: 2025-06-03
+Last Updated: 2025-06-05
 """
 
 # imports
-import requests, glob, sys, os, time, json
-from dotenv import load_dotenv
-import status_codes
+import requests, glob, sys, os, time, json # standard libraries
+from dotenv import load_dotenv 
+import status_codes 
+import parser_module
 
 
 # environment variables
 load_dotenv() # load environment variables
 
+# defaults
 username = os.getenv("USERNAME")
 password = os.getenv("PASSWORD")
-project_name = os.getenv("PROJECT_NAME")
-image_file_location = os.getenv("IMAGE_FILE_LOCATION")
-options_file_name = os.getenv("OPTIONS_FILE_NAME")
-asset = os.getenv("ASSET_TO_DOWNLOAD")
-
 
 # global variables
 file_types = ("*.jpg", "*.jpeg", "*.JPG", "*.JPEG")
@@ -182,13 +179,14 @@ def get_task(token, project_id, task_id):
     
     return res
 
-def get_download(token, project_id, task_id, asset):
+def get_download(token, project_id, task_id, output_dir, asset):
     """
-    download a given asset
+    Downloads a given asset. If output directory not found, defaults to root directory
     
     :param token: authentication token
     :param project_id: ID of project
     :param task_id: ID of task
+    :param output_dir: directory of where the file should be downloaded
     :param asset: what to download (ex. orthophoto.tif)
     :return: N/A
     """
@@ -198,14 +196,24 @@ def get_download(token, project_id, task_id, asset):
                         headers={'Authorization': 'JWT {}'.format(token)},
                         stream=True)
 
+    asset_path = asset
+    
+    # check that output directory is valid
+    if output_dir == None:
+        pass
+    elif os.path.exists(output_dir) and os.path.isdir(output_dir):
+        asset_path = os.path.join(output_dir, asset)
+    else:
+        print(f"\nOutput_dir invalid, downloading {asset} to root directory\n")
+    
     # write to new file in chunks 
-    with open(f"{asset}", 'wb') as f:
+    with open(f"{asset_path}", 'wb') as f:
         for chunk in res.iter_content(chunk_size=1024): 
             if chunk:
                 f.write(chunk)
 
     # print notification of download to console
-    print(f"Saved ./{asset}")
+    print(f"Saved ./{asset_path}")
     
 def get_options(file_name):
     """
@@ -253,7 +261,22 @@ def get_processing_time(token, project_id, task_id):
     return res['processing_time']
 
 
+
+# main
+
 if __name__ == "__main__":
+    
+    # init parser
+    parser = parser_module.create_parser() # create parser and arguments
+    args = parser.parse_args() 
+    args_dict = vars(args) # convert args into dictionary
+    
+    # variable assignment
+    project_name = args_dict["project_name"] # assign project name
+    options_file_name = parser_module.get_options_file_path(args_dict) # assign options file name (and path)
+    image_file_location = args_dict["image_files_dir"] # assign image file location
+    output_dir = args_dict["output_dir"] # assign output directory
+    asset = args_dict["asset"] # assign asset to download (could be set to a default value)
     
     # get image paths 
     image_paths = get_image_paths(image_file_location)
@@ -322,14 +345,13 @@ if __name__ == "__main__":
     # print total time
     print(f'Total Time: {elapsed_time}')
     
-    # print available assets
+    # get available assets
     res = get_task(token, project_id, task_id) # get task
-    
     available_assets = res['available_assets'] # get all available assets
     
-    for available_asset in available_assets: # print to console
-        print(available_asset)
+    # validate chosen asset
+    asset = parser_module.validate_asset(available_assets, asset)
     
-    # download item
-    get_download(token, project_id, task_id, asset)
+    # download asset
+    get_download(token, project_id, task_id, output_dir, asset)
 
