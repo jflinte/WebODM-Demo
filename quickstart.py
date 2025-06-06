@@ -322,7 +322,8 @@ if __name__ == "__main__":
                 print("Task completed")
                 break
             elif status == status_codes.FAILED:
-                print("Task failed")
+                print_error("Task failed") # I am not deleting the task here, because it might be useful to keep it for diagnostic data
+                
             else:
                 # processing_time = get_processing_time(token, project_id, task_id)
                 res = get_task(token, project_id, task_id)

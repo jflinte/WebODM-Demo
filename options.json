@@ -1,11 +1,7 @@
 [
     {
         "name": "orthophoto-resolution",
-        "value": 8
-    },
-    {
-        "name": "fast-orthophoto",
-        "value": "true"
+        "value": 3
     },
     {
         "name": "auto-boundary",

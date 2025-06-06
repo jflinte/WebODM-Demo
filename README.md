@@ -3,7 +3,7 @@ WebODM Demo is a project intended to demonstrate the capabilities of WebODM for 
 
 ## Requirements
 - [Docker](https://www.docker.com/products/docker-desktop/)
-- [WebODM](https://opendronemap.org/webodm/)
+- [WebODM](https://github.com/OpenDroneMap/WebODM?tab=readme-ov-file#getting-started)
 - [requests library](https://docs.python-requests.org/en/latest/index.html)
 
 ## Usuage
@@ -41,11 +41,23 @@ Additional Notes:
 ## Adding Distributed Computing
 Follow steps provided [here](https://www.opendronemap.org/clusterodm/) and [here](https://docs.opendronemap.org/large/#distributed-split-merge)
 
+## Additional Features of WebODM
+- [SSL](https://letsencrypt.org/)
+- [IPv6](https://github.com/OpenDroneMap/WebODM?tab=readme-ov-file#getting-started)
+- [Run (Docker Version) as Linux Service](https://github.com/OpenDroneMap/WebODM?tab=readme-ov-file#getting-started)
+- [Multispectral image](https://en.wikipedia.org/wiki/Multispectral_imaging) processing
+
+## Datasets
+- [ODM](https://www.opendronemap.org/odm/datasets/)
+- [ArcGIS Reality](https://www.esri.com/en-us/arcgis/products/arcgis-reality/resources/sample-drone-datasets)
+- [UAV-datasets](https://github.com/qiangsun89/UAV-datasets)
+
+
 ## Documentation
 - [WebODM Documentation](https://docs.webodm.org/)
 - [ODM Documentation](https://docs.opendronemap.org/)
 - [NodeODM Documentation](https://github.com/OpenDroneMap/NodeODM/blob/master/docs/index.adoc) 
 - [ClusterODM Documentation](https://github.com/OpenDroneMap/ClusterODM/tree/master)
 - [Multispectral Data Binner](https://github.com/OpenDroneMap/ODM/tree/master/contrib/exif-binner)
-- [Datasets](https://www.opendronemap.org/odm/datasets/)
+
 
