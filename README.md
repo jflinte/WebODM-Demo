@@ -33,10 +33,19 @@ Additional Notes:
 
 `more pending`
 
+## Adding Additional Processing Nodes
+- [Set up Environment](https://learn.microsoft.com/en-us/windows/wsl/setup/environment) (if on Windows)
+- [Start up NodeODM](https://github.com/OpenDroneMap/NodeODM) on new machine
+- [Add Processing Node](https://docs.webodm.org/#processing-node) with WebODM API or GUI
+
+## Adding Distributed Computing
+Follow steps provided [here](https://www.opendronemap.org/clusterodm/) and [here](https://docs.opendronemap.org/large/#distributed-split-merge)
+
 ## Documentation
 - [WebODM Documentation](https://docs.webodm.org/)
 - [ODM Documentation](https://docs.opendronemap.org/)
 - [NodeODM Documentation](https://github.com/OpenDroneMap/NodeODM/blob/master/docs/index.adoc) 
+- [ClusterODM Documentation](https://github.com/OpenDroneMap/ClusterODM/tree/master)
 - [Multispectral Data Binner](https://github.com/OpenDroneMap/ODM/tree/master/contrib/exif-binner)
 - [Datasets](https://www.opendronemap.org/odm/datasets/)
 

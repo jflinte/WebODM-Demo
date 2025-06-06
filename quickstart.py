@@ -1,5 +1,5 @@
 """
-quickstart.py: Demo
+quickstart.py: Create a project and task, upload and process images, and download the various output assets
 
 Author: Jonas 
 Last Updated: 2025-06-05
@@ -10,7 +10,6 @@ import requests, glob, sys, os, time, json # standard libraries
 from dotenv import load_dotenv 
 import status_codes 
 import parser_module
-
 
 # environment variables
 load_dotenv() # load environment variables

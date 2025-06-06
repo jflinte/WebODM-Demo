@@ -1,7 +1,5 @@
 """
-parser_module.py: parsing given from user
-
-./ <args> <project_name> <options_file_name> <image_files_dir> 
+parser_module.py: parsing commandline arguments given by user
 
 Author: Jonas 
 Last Updated: 2025-06-05
