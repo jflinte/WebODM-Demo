@@ -48,7 +48,9 @@ Follow steps provided [here](https://www.opendronemap.org/clusterodm/) and [here
 - [Multispectral image](https://en.wikipedia.org/wiki/Multispectral_imaging) processing
 
 ## Additional Assets
-- [Hugin](https://wiki.panotools.org/Hugin#Development) can be used to stitch together Orthophotos. Supports Python Scripts
+- [Hugin](https://wiki.panotools.org/Hugin#Development) can be used to stitch together Orthophotos. Supports [Python Scripts](https://hugin.sourceforge.io/docs/manual/Hugin_Scripting_Interface.html
+)
+- [Extract](https://github.com/fede2cr/video2webodm) stills from video file (I believe [WebODM](https://docs.webodm.net/how-to/process-video-files/) already has the feature)
 
 ## Datasets
 - [ODM](https://www.opendronemap.org/odm/datasets/)

@@ -2,7 +2,7 @@
 parser_module.py: parsing commandline arguments given by user
 
 Author: Jonas 
-Last Updated: 2025-06-05
+Last Updated: 2025-06-09
 """
 
 # imports
@@ -36,6 +36,10 @@ def create_parser():
 
     # Asset to Download (default is all.zip)
     parser.add_argument("-a", "--asset", help="What asset should be downloaded", type=str, default="all.zip")
+    
+    # Video file
+    parser.add_argument("-v", "--video", help="Use video file instead of collection of images", type=bool, action='store_true', default=False)
+    
     
     return parser
 
@@ -87,7 +91,7 @@ def get_options_file_path(args_dict):
         return os.path.join(options_file_path, options_name)
     
     
-
+# can be used to test functionality 
 if __name__ == "__main__":
     # var
     available_assets = ["all.zip", "orthophoto.png", "orthophoto.tiff"]
@@ -107,8 +111,6 @@ if __name__ == "__main__":
     # Asset handler 
     asset = validate_asset(available_assets, args_dict['asset'])
     
-    
-
     # note that python3 is skipped over when using argv
     
     for key, value in args_dict.items():
