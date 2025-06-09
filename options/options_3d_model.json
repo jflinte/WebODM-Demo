@@ -18,5 +18,9 @@
     {
         "name": "mesh-size",
         "value": "300000"
+    },
+    {
+        "name": "skip-orthophoto",
+        "value": true
     }
 ]

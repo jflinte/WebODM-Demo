@@ -47,11 +47,13 @@ Follow steps provided [here](https://www.opendronemap.org/clusterodm/) and [here
 - [Run (Docker Version) as Linux Service](https://github.com/OpenDroneMap/WebODM?tab=readme-ov-file#getting-started)
 - [Multispectral image](https://en.wikipedia.org/wiki/Multispectral_imaging) processing
 
+## Additional Assets
+- [Hugin](https://wiki.panotools.org/Hugin#Development) can be used to stitch together Orthophotos. Supports Python Scripts
+
 ## Datasets
 - [ODM](https://www.opendronemap.org/odm/datasets/)
 - [ArcGIS Reality](https://www.esri.com/en-us/arcgis/products/arcgis-reality/resources/sample-drone-datasets)
 - [UAV-datasets](https://github.com/qiangsun89/UAV-datasets)
-
 
 ## Documentation
 - [WebODM Documentation](https://docs.webodm.org/)
