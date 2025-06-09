@@ -38,7 +38,7 @@ def create_parser():
     parser.add_argument("-a", "--asset", help="What asset should be downloaded", type=str, default="all.zip")
     
     # Video file
-    parser.add_argument("-v", "--video", help="Use video file instead of collection of images", type=bool, action='store_true', default=False)
+    parser.add_argument("-v", "--video", help="Name of the video file to be uploaded instead of images", type=str)
     
     
     return parser

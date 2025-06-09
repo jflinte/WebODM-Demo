@@ -2,7 +2,7 @@
 quickstart.py: Create a project and task, upload and process images, and download the various output assets
 
 Author: Jonas 
-Last Updated: 2025-06-05
+Last Updated: 2025-06-09
 """
 
 # imports
@@ -85,7 +85,7 @@ def post_task(token, project_id, images, options):
     """
 
     res = requests.post('http://localhost:8000/api/projects/{}/tasks/'.format(project_id),
-                        headers ={'Authorization': 'JWT {}'.format(token)},
+                        headers = {'Authorization': 'JWT {}'.format(token)},
                         files = images,
                         data = {
                             'options': options
@@ -133,10 +133,11 @@ def get_image_paths(dir_path):
     # return all of the paths
     return image_paths
         
-def get_images(image_paths):
+def get_images(dir_path, image_paths):
     """
     Gets a list of images from a given list of file paths
     
+    :param dir_path: path to directory containing the images
     :param image_paths: paths to the images
     :returns: images
     """
@@ -153,14 +154,69 @@ def get_images(image_paths):
     
     # append gcp data
     for type in text_file_types: # check for gcp files
-        gcp_paths.extend(glob.glob(os.path.join(image_path, type))) # add file paths of given type to image paths
+        gcp_paths.extend(glob.glob(os.path.join(dir_path, type))) # add file paths of given type to image paths
 
     if gcp_paths != []: # check if gcp file give
         for gcp_path in gcp_paths: # append all gcp files to end of images
-            images.append(('gcp', (os.path.basename(gcp_path), open(gcp_path, 'rb'), 'gcp')))
+            images.append(('gcp', (os.path.basename(gcp_path), open(gcp_path, 'rb'), 'text/plain')))
 
     # return images
     return images
+
+def get_video_path(dir_path, video_file_name):
+    """
+    Gets a video path with a given name and from a given directory path
+    
+    :param dir_path: directory path to video
+    :param video_file_name: name of video file
+    :return: N/A
+    """
+    
+    # var
+    video_path = str()
+    
+    # not 100% sure of these file types, so I'm only including mp4, which I'm sure of
+    video_file_types = [".mp4", ".MP4"] #, ".mov", ".MOV", ".lrv", ".LRV", ".ts", ".TS"]
+            
+    # check video name
+    for t in video_file_types:
+        video_path = glob.glob(os.path.join(dir_path, f"{video_file_name}{t}")) 
+    
+    # check if empty
+    if not video_path:
+        print_error(f"File not found. Must be of type {video_file_types}")
+    else:
+        print(f"{video_file_name} found")
+        return video_path[0] # return the first found file path
+
+def get_video(dir_path, video_path, video_file_name):
+    """
+    Gets a video (and subtitle file) from a given directory path
+    
+    :param dir_path: path to directory containing video
+    :param video_path: path to video
+    :param video_file_name: name of video file
+    :return: N/A
+    """
+    
+    # var
+    srt_file_path = str()
+    subtitle_file_types = [f"{video_file_name}.srt", f"{video_file_name}.SRT"]
+    
+    video = list()
+
+    # get video
+    for i in range(2): # required to submit at least 2 images, so the video is uploaded twice
+        video.append(('images', (os.path.basename(video_path), open(video_path, 'rb'), 'video/mp4')))  
+    
+    # check and append srt file
+    for t in subtitle_file_types:
+        srt_file_path = glob.glob(os.path.join(dir_path, t))
+        
+    if srt_file_path:
+        video.append(('srt', (os.path.basename(srt_file_path), open(srt_file_path, 'rb'), '.srt')))
+        
+    return video
 
 def get_task(token, project_id, task_id):
     """
@@ -287,8 +343,11 @@ if __name__ == "__main__":
     output_dir = args_dict["output_dir"] # assign output directory
     asset = args_dict["asset"] # assign asset to download (could be set to a default value)
     
-    # get image paths 
-    image_paths = get_image_paths(image_file_location)
+    # get file paths 
+    if args.video:
+        video_path = get_video_path(image_file_location, args_dict['video'])
+    else:
+        image_paths = get_image_paths(image_file_location)
     
     # authorize
     token = post_authentication(username, password)
@@ -302,8 +361,11 @@ if __name__ == "__main__":
     # notify user of created project
     print(f"Project created: {project_name}")
     
-    # get image paths
-    images = get_images(image_paths)
+    # get images/video
+    if args.video:
+        images = get_video(image_file_location, video_path, args_dict['video']) # note, video is uploaded as an image
+    else:
+        images = get_images(image_file_location, image_paths)
     
     # get options
     options = get_options(options_file_name)

@@ -9,24 +9,24 @@ WebODM Demo is a project intended to demonstrate the capabilities of WebODM for 
 ## Usuage
 
 ### Quickstart.py
-`quickstart.py <args> <project_name> <options_file_name> <image_files_dir>`
+CLI: `quickstart.py <args> <project_name> <options_file_name> <image_files_dir>`
 
 Additional arguments:
 - `-opd` / `--options_dir <string>`: Directory path to folder containing options JSON file. If not provided, assumed to be in root directory.
 - `-od` / `--output_dir <string>`: Directory path to folder where output files will be placed. If not provided, output will be placed in root directory. 
 - `a` / `--asset <string>`: What asset should be downloaded. Default: `'all.zip'`
+- `v` / `--video <string>`: Name of the video file to be uploaded instead of images
 
 Additional notes:
 - `username` and `password` should be placed in `.env` file
 - Minimum of 5 images must be provided
 - Images must be of `*.jpg` file type
 - If processing with GCP, the GCP data must be included **IN** the same directory as the images. The data must be stored as a `*.txt` file. 
+- If processing with SRT, the SRT file must have the **SAME** name as the video file uploaded and must be in the same directory
 - Directory named after the `project_name` will be created either in the root directory or in the specified output directory, where the output will be stored. 
 
-`more pending`
-
 ### delete_project.py
-`delete_project.py <name of project>`
+CLI: `delete_project.py <name of project>`
 
 Additional Notes:
 - Deletes **all** projects of a given name, regardless of different IDs, letting one perform mass deletions.
