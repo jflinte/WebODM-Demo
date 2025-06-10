@@ -28,8 +28,23 @@ Additional notes:
 ### delete_project.py
 CLI: `delete_project.py <name of project>`
 
-Additional Notes:
+Additional notes:
 - Deletes **all** projects of a given name, regardless of different IDs, letting one perform mass deletions.
+
+### processing_nodes.py
+CLI: `processing_nodes.py <arguments>`
+
+Additional arguments:
+- `hn` / `--hostname <string>`: Hostname of processing node
+- `p` / `--port <integer>`: Port of processing node
+- `id` / `--identification <integer>`: ID of processing node
+- `d` / `--delete`: Set delete to true
+
+Additional notes
+- To add a processing node, simply provide the `hostname` and the `port` as arguments
+- To delete a processing node, provide either the `hostname` **and** the `port` as arguments or provide only the `id`
+- When deleting, `id` is given priority over `hostname` and `port`
+- If only `hostname` and `port` are provided, **all** processing nodes with given specifications will be deleted, regardless of differing `ids`
 
 `more pending`
 
