@@ -2,7 +2,7 @@
 quickstart.py: Create a project and task, upload and process images, and download the various output assets
 
 Author: Jonas 
-Last Updated: 2025-06-09
+Last Updated: 2025-06-10
 """
 
 # imports
@@ -328,7 +328,6 @@ def get_processing_time(token, project_id, task_id):
 
 
 # main
-
 if __name__ == "__main__":
     
     # init parser
