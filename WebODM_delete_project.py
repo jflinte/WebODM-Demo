@@ -1,5 +1,5 @@
 """
-delete_project.py: delete ALL projects of a given name
+WebODM_delete_project.py: delete ALL projects of a given name
 
 Author: Jonas 
 Last Updated: 2025-06-04
@@ -7,7 +7,7 @@ Last Updated: 2025-06-04
 
 # imports
 import os, sys
-import quickstart
+import WebODM_main
 import requests
 
 # functions
@@ -51,7 +51,7 @@ def delete_projects(token, project_id):
 if __name__ == '__main__':
     
     if len(sys.argv) < 2:
-        quickstart.print_error("Must provide name of project. Usuage ./delete_project.py <name of project>")
+        WebODM_main.print_error("Must provide name of project. Usuage ./delete_project.py <name of project>")
     else:
         project_name = sys.argv[1]
         
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     print(f'Deleting {project_name}')
     
     # get token
-    token = quickstart.post_authentication(quickstart.username, quickstart.password)
+    token = WebODM_main.post_authentication(WebODM_main.username, WebODM_main.password)
     
     # get project IDs
     project_ids = get_project_ids(token, project_name)

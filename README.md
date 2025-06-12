@@ -4,13 +4,19 @@ WebODM Demo is a project intended to demonstrate the capabilities of WebODM for 
 ## Requirements
 - [Docker](https://www.docker.com/products/docker-desktop/)
 - [WebODM](https://github.com/OpenDroneMap/WebODM?tab=readme-ov-file#getting-started)
+- [NodeODM](https://github.com/OpenDroneMap/NodeODM/blob/master/docs/index.adoc)
+- [PyODM library](https://pyodm.readthedocs.io/en/latest/)
 - [requests library](https://docs.python-requests.org/en/latest/index.html)
 
 ## Usuage
 
-For Scripts with the prefix WebODM, run `WebODM` using `Docker`
+For Scripts with the prefix <u>WebODM</u>, run `WebODM` using `Docker`
 
 Note that WebODM should be available on `localhost:8000`
+
+For Scripts with the prefix <u>NodeODM</u>, run `NodeODM` using `Docker`
+
+Note that NodeODM should be available on `localhost:3000`
 
 ### WebODM_main.py
 CLI: `quickstart.py <args> <project_name> <options_file_name> <image_files_dir>`
@@ -49,6 +55,12 @@ Additional notes
 - To delete a processing node, provide either the `hostname` **and** the `port` as arguments or provide only the `id`
 - When deleting, `id` is given priority over `hostname` and `port`
 - If only `hostname` and `port` are provided, **all** processing nodes with given specifications will be deleted, regardless of differing `ids`
+
+### NodeODM_main.py
+CLI: `NodeODM_main.py <path to directory containing images>`
+
+Additional notes
+- Still under development
 
 `more pending`
 

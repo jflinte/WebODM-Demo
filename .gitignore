@@ -4,8 +4,9 @@ __pycache__/
 # Ignore IDE related items
 .vscode/
 
-# Ignore environment variables
+# Ignore environments
 .env
+odm-env/
 
 # Ignore downloadables
 *.pdf
@@ -16,5 +17,5 @@ __pycache__/
 # Ignore list of predesigned commands
 commands.txt
 
-# ignore under testing
-node_odm.py
+# Ignore output file
+output/

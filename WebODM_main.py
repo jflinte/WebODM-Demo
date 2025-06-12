@@ -1,8 +1,8 @@
 """
-quickstart.py: Create a project and task, upload and process images, and download the various output assets
+WebODM_main.py: Create a project and task, upload and process images, and download the various output assets
 
 Author: Jonas 
-Last Updated: 2025-06-10
+Last Updated: 2025-06-12
 """
 
 # imports

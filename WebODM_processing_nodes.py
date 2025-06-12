@@ -1,5 +1,5 @@
 """
-processing_nodes.py: add processing nodes
+WebODM_processing_nodes.py: add processing nodes
 
 Author: Jonas 
 Last Updated: 2025-06-10
@@ -9,7 +9,7 @@ Last Updated: 2025-06-10
 import os, sys, time
 import argparse
 import requests
-import quickstart
+import WebODM_main
 
 # functions
 def create_parser():
@@ -110,7 +110,7 @@ def delete_processing_node(token, id):
     """  
     
     if (pnid == 1):
-        quickstart.print_error('Not allowed to delete default processing node')
+        WebODM_main.print_error('Not allowed to delete default processing node')
         
     
     res = requests.delete('http://localhost:8000/api/processingnodes/{}/'.format(id), 
@@ -157,8 +157,8 @@ def check_if_pn_added(hostname, port, processing_nodes):
     return False
         
 # var
-username = quickstart.username
-password = quickstart.password
+username = WebODM_main.username
+password = WebODM_main.password
 
 # main
 
@@ -176,10 +176,10 @@ if __name__ == "__main__":
     
     
     # get authentication token
-    token = quickstart.post_authentication(username, password)
+    token = WebODM_main.post_authentication(username, password)
     
     if not ((args.hostname and args.port) or args.identification):
-        quickstart.print_error('Not enough arguments')
+        WebODM_main.print_error('Not enough arguments')
     
     # delete
     if args_dict['delete'] == True:
@@ -194,7 +194,7 @@ if __name__ == "__main__":
             # delete processing nodes with given ids
             delete_processing_nodes(token, ids)  
         else:
-            quickstart.print_error('Error deleting processing node')
+            WebODM_main.print_error('Error deleting processing node')
         
     elif args.hostname and args.port: # create
         # get processing nodes
@@ -207,9 +207,9 @@ if __name__ == "__main__":
             print(f'Processing Node {pnid} added')
         else:
             # print error message
-            quickstart.print_error('Processing Node already exists')
+            WebODM_main.print_error('Processing Node already exists')
     else:
-        quickstart.print_error('Not enough arguments provided')
+        WebODM_main.print_error('Not enough arguments provided')
             
         
 
