@@ -6,24 +6,102 @@ Last Updated: 2025-06-10
 """
 
 # imports
-import requests, glob, sys, os, time, json # standard libraries
+import requests, glob, sys, os, time, argparse, json # standard libraries
 from dotenv import load_dotenv 
 import status_codes 
-import parser_module
 
 # environment variables
 load_dotenv() # load environment variables
-
-# defaults
-username = os.getenv("USERNAME")
-password = os.getenv("PASSWORD")
+username = os.getenv("USERNAME") # set environment variable
+password = os.getenv("PASSWORD") # set environment variable
 
 # global variables
-file_types = ("*.jpg", "*.jpeg", "*.JPG", "*.JPEG")
-min_number_of_images = 5
+
+min_number_of_images = 5 
 
 # functions
 
+def create_parser():
+    """
+    Creates Parser and adds required arguments to it
+    
+    :param: N/A 
+    :return: ArgumentParser object
+    """
+    
+    parser = argparse.ArgumentParser()
+
+    # Name of Project
+    parser.add_argument("project_name", help="Name of the project to be created")
+
+    # Name of Options File 
+    parser.add_argument("options_file_name", help="Name of the JSON file containing the options to be uploaded")
+    
+    # Image Files Location
+    parser.add_argument("image_files_dir", help="Directory path to folder of images to be uploaded (and optionally the GCP text file)")
+
+    # Options File Location (default is in root directory)
+    parser.add_argument("-opd", "--options_dir", help="Directory path to folder containing options JSON file", type=str)
+
+    # Output directory (default is root directory)
+    parser.add_argument("-od", "--output_dir", help="Directory path to folder where output files will be placed", type=str)
+
+    # Asset to Download (default is all.zip)
+    parser.add_argument("-a", "--asset", help="What asset should be downloaded", type=str, default="all.zip")
+    
+    # Video file
+    parser.add_argument("-v", "--video", help="Name of the video file to be uploaded instead of images", type=str)
+    
+    
+    return parser
+
+def validate_asset(available_assets, asset):
+    """
+    Check if assets is in available assets list. If not, set to 'all.zip'
+    
+    :param available_assets: all assets available to download (list)
+    :param asset: user inputed asset (string)
+    :return: asset (string)
+    """
+    
+    # var
+    default_asset = 'all.zip'
+    
+    # validation
+    if asset in available_assets: # check if asset available
+        # asset is avaiable, so it is returned
+        return asset
+    else: 
+        
+        # notify user of availability and print available assets
+        print(f"\nAsset ({asset}) not found in available assets:")
+        for a in available_assets:
+            print(f"\t* {a}")
+        
+        # notify user that asset set to default
+        print(f"Setting asset to \'{default_asset}\'\n")
+        
+        # return the default asset
+        return default_asset
+
+def get_options_file_path(args_dict):
+    """
+    Get options file path if a file path is given. Otherwise, simply return options file name under the assumption that it is in the root directory
+    
+    :param args_dict: arguments input by user (dictionary)
+    :return: options_file_path (string)
+    """
+    
+    # var
+    options_name = args_dict['options_file_name']
+    options_file_path = args_dict['options_dir']
+    
+    # handling
+    if options_file_path == None: # if path not provided, return options name
+        return options_name
+    else: # if path provided, return joined path and name
+        return os.path.join(options_file_path, options_name)
+    
 def print_error(error_message):
     """
     Prints an error to the console and exits the system
@@ -117,8 +195,9 @@ def get_image_paths(dir_path):
     :return images: list of image paths
     """
     
-    # empty list
+    # var
     image_paths = list()
+    file_types = ("*.jpg", "*.jpeg", "*.JPG", "*.JPEG")
     
     # search for all file types
     for type in file_types:
@@ -325,19 +404,17 @@ def get_processing_time(token, project_id, task_id):
     # return status
     return res['processing_time']
 
-
-
 # main
 if __name__ == "__main__":
     
     # init parser
-    parser = parser_module.create_parser() # create parser and arguments
+    parser = create_parser() # create parser and arguments
     args = parser.parse_args() 
     args_dict = vars(args) # convert args into dictionary
     
     # variable assignment
     project_name = args_dict["project_name"] # assign project name
-    options_file_name = parser_module.get_options_file_path(args_dict) # assign options file name (and path)
+    options_file_name = get_options_file_path(args_dict) # assign options file name (and path)
     image_file_location = args_dict["image_files_dir"] # assign image file location
     output_dir = args_dict["output_dir"] # assign output directory
     asset = args_dict["asset"] # assign asset to download (could be set to a default value)
@@ -421,7 +498,7 @@ if __name__ == "__main__":
     available_assets = res['available_assets'] # get all available assets
     
     # validate chosen asset
-    asset = parser_module.validate_asset(available_assets, asset)
+    asset = validate_asset(available_assets, asset)
     
     # download asset
     get_download(token, project_name, project_id, task_id, output_dir, asset)

@@ -8,6 +8,10 @@ WebODM Demo is a project intended to demonstrate the capabilities of WebODM for 
 
 ## Usuage
 
+`Run WebODM using Docker`
+
+WebODM should be available on `localhost:8000`
+
 ### Quickstart.py
 CLI: `quickstart.py <args> <project_name> <options_file_name> <image_files_dir>`
 
@@ -76,6 +80,7 @@ Follow steps provided [here](https://www.opendronemap.org/clusterodm/) and [here
 - [WebODM Documentation](https://docs.webodm.org/)
 - [ODM Documentation](https://docs.opendronemap.org/)
 - [NodeODM Documentation](https://github.com/OpenDroneMap/NodeODM/blob/master/docs/index.adoc) 
+- [PyODM Documentation](https://pyodm.readthedocs.io/en/latest/)
 - [ClusterODM Documentation](https://github.com/OpenDroneMap/ClusterODM/tree/master)
 - [Multispectral Data Binner](https://github.com/OpenDroneMap/ODM/tree/master/contrib/exif-binner)
 

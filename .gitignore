@@ -15,3 +15,6 @@ __pycache__/
 
 # Ignore list of predesigned commands
 commands.txt
+
+# ignore under testing
+node_odm.py
