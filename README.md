@@ -8,11 +8,11 @@ WebODM Demo is a project intended to demonstrate the capabilities of WebODM for 
 
 ## Usuage
 
-Run `WebODM` using `Docker`
+For Scripts with the prefix WebODM, run `WebODM` using `Docker`
 
-WebODM should be available on `localhost:8000`
+Note that WebODM should be available on `localhost:8000`
 
-### Quickstart.py
+### WebODM_main.py
 CLI: `quickstart.py <args> <project_name> <options_file_name> <image_files_dir>`
 
 Additional arguments:
@@ -29,13 +29,13 @@ Additional notes:
 - If processing with SRT, the SRT file must have the **SAME** name as the video file uploaded and must be in the same directory
 - Directory named after the `project_name` will be created either in the root directory or in the specified output directory, where the output will be stored. 
 
-### delete_project.py
+### WebODM_delete_project.py
 CLI: `delete_project.py <name of project>`
 
 Additional notes:
 - Deletes **all** projects of a given name, regardless of different IDs, letting one perform mass deletions.
 
-### processing_nodes.py
+### WebODM_processing_nodes.py
 CLI: `processing_nodes.py <arguments>`
 
 Additional arguments:
