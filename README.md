@@ -8,7 +8,7 @@ WebODM Demo is a project intended to demonstrate the capabilities of WebODM for 
 
 ## Usuage
 
-`Run WebODM using Docker`
+Run `WebODM` using `Docker`
 
 WebODM should be available on `localhost:8000`
 
